@@ -88,3 +88,50 @@ def main():
                 mouseClicked = True
 
         boxx, boxy = getBoxAtPixel(mousex, mousey)
+
+        if boxx != None and boxy != None:
+            # The mouse is currently over a box
+            if not revealedBoxes[boxx][boxy]:
+                drawHighlightBox(boxx, boxy)
+            if not revealedBoxes[boxx][boxy] and mouseClicked:
+                revealedBoxesAnimation(mainBoard, [(boxx, boxy)])
+                revealedBoxes[boxx][boxy] = True # set the box as revealed
+
+                if firstSelection == None:  # the current box was the first box clicked
+                    firstSelection = (boxx, boxy)
+
+                else:  # current box was the second box clicked
+                    # check if there is a match between the two icons
+                    icon1shape, icon1color = getShapeAndColor(mainBoard,
+                                                              firstSelection[0], firstSelection[1])
+
+                    icon2shape, icon2color = getShapeAndColor(mainBoard, boxx, boxy)
+
+                    if icon1shape != icon2shape or icon1color != icon2color:
+                        # Icons don't match. Re-cover up both selections
+                        pygame.time.wait(1000)  # 1000 milliseconds = 1 sec
+                        coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1])])
+                        revealedBoxes[firstSelection[0]][firstSelection[1]] = False
+
+                        revealedBoxes[boxx][boxy] = False
+
+                    elif haswon(revealedBoxes):  # check if all pairs found
+                        gameWonAnimation(mainBoard)
+                        pygame.time.wait(2000)
+
+                        # Reset the board
+                        mainBoard = getRandomizedBoard()
+                        revealedBoxes = generateRevealedBoxesData(False)
+
+                        # show the fully unrevealed board for a second
+                        drawBoard(mainBoard, revealedBoxes)
+                        pygame.display.update()
+                        pygame.time.wait(1000)
+
+                        # Replay the start game animation.
+                        startGameAnimation(mainBoard)
+                    firstSelection = None # reset firstSelection variable
+
+        # Redraw the screen and wait a clock tick
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
