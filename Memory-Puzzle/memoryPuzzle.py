@@ -135,3 +135,36 @@ def main():
         # Redraw the screen and wait a clock tick
         pygame.display.update()
         FPSCLOCK.tick(FPS)
+
+
+def generateRevealedBoxesData(val):
+    revealedBoxes = []
+    for i in range(BOARDWIDTH):
+        revealedBoxes.append([val] * BOARDHEIGHT)
+
+    return revealedBoxes
+
+def getRandomizedBoard():
+    # Get a list of every possible shape in every possible color.
+
+    icons = []
+    for color in ALLCOLORS:
+        for shape in ALLSHAPES:
+            icons.append((shape, color))
+
+    random.shuffle(icons)  # randomize the order of the icons list
+    numIconsUsed = int(BOARDWIDTH * BOARDHEIGHT / 2)  # calculate how many icons are neeeded
+    icons = icons[:numIconsUsed] * 2  # make two of each
+    random.shuffle(icons)
+
+    # Create the board data structure, with randomly placed icons.
+
+    board = []
+    for x in range(BOARDWIDTH):
+        column = []
+        for y in range(BOARDHEIGHT):
+            column.append(icons[0])
+            del icons[0]  # remove the icons as we assign them
+
+        board.append(column)
+    return board
