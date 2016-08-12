@@ -282,3 +282,21 @@ def drawHighlightBox(boxx, boxy):
     left, top = leftTopCoordsOfBox(boxx, boxy)
     pygame.draw.rect(DISPLAYSURF, HIGHLIGHTCOLOR, (left - 5, top - 5,
                                                    BOXSIZE + 10, BOXSIZE + 10), 4)
+
+
+def startGameAnimation(board):
+    # Randomly reveal the boxes 8 at a time.
+
+    coveredBoxes = generateRevealedBoxesData(False)
+    boxes = []
+    for x in range(BOARDWIDTH):
+        for y in range(BOARDHEIGHT):
+            boxes.append(x, y)
+
+    random.shuffle(boxes)
+    boxGroups = splitIntoGroupsOf(8, boxes)
+
+    drawBoard(board, coveredBoxes)
+    for boxGroup in boxGroups:
+        revealBoxesAnimation(board, boxGroup)
+        coverBoxesAnimation(board, boxGroup)
