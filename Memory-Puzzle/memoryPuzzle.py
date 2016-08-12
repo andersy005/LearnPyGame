@@ -160,7 +160,7 @@ def getRandomizedBoard():
     # Create the board data structure, with randomly placed icons.
 
     board = []
-    for x in range(BOARDWIDTHcd ):
+    for x in range(BOARDWIDTH ):
         column = []
         for y in range(BOARDHEIGHT):
             column.append(icons[0])
@@ -180,3 +180,9 @@ def splitIntoGroupsOf(groupSize, theList):
 
     return result
 
+
+def leftTopCoordsOfBox(boxx, boxy):
+    # Convert board coordinates to pixel coordinates
+    left = boxx * (BOXSIZE + GAPSIZE) + XMARGIN
+    top = boxy * (BOXSIZE + GAPSIZE) + YMARGIN
+    return left, top
