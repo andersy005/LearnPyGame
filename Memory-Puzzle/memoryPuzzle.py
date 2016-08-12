@@ -53,7 +53,7 @@ def main():
     global FPSCLOCK, DISPLAYSURF
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode(WINDOWWIDTH, WINDOWHEIGHT)
+    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 
     mousex = 0  # used to store x coordinate of  mouse event
     mousey = 0  # used to store y coordinate of mouse event
@@ -87,7 +87,7 @@ def main():
 
         boxx, boxy = getBoxAtPixel(mousex, mousey)
 
-        if boxx != None and boxy != None:
+        if boxx is not None and boxy is not None:
             # The mouse is currently over a box
             if not revealedBoxes[boxx][boxy]:
                 drawHighlightBox(boxx, boxy)
@@ -95,7 +95,7 @@ def main():
                 revealBoxesAnimation(mainBoard, [(boxx, boxy)])
                 revealedBoxes[boxx][boxy] = True  # set the box as revealed
 
-                if firstSelection == None:  # the current box was the first box clicked
+                if firstSelection is None:  # the current box was the first box clicked
                     firstSelection = (boxx, boxy)
 
                 else:  # current box was the second box clicked
@@ -291,7 +291,7 @@ def startGameAnimation(board):
     boxes = []
     for x in range(BOARDWIDTH):
         for y in range(BOARDHEIGHT):
-            boxes.append(x, y)
+            boxes.append((x, y))
 
     random.shuffle(boxes)
     boxGroups = splitIntoGroupsOf(8, boxes)
