@@ -160,7 +160,7 @@ def getRandomizedBoard():
     # Create the board data structure, with randomly placed icons.
 
     board = []
-    for x in range(BOARDWIDTH):
+    for x in range(BOARDWIDTHcd ):
         column = []
         for y in range(BOARDHEIGHT):
             column.append(icons[0])
@@ -168,3 +168,15 @@ def getRandomizedBoard():
 
         board.append(column)
     return board
+
+
+def splitIntoGroupsOf(groupSize, theList):
+    # splits a list into a list of lists, where the inner lists have
+    # at most groupSize number of items
+
+    result = []
+    for i in range(0, len(theList), groupSize):
+        result.append(theList[i:i + groupSize])
+
+    return result
+
