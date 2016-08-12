@@ -221,8 +221,15 @@ def drawIcon(shape, color, boxx, boxy):
     elif shape == LINES:
         for i in range(0, BOXSIZE, 4):
             pygame.draw.line(DISPLAYSURF, color, (left, top + i), (left + i, top))
-            pygame.draw.line(DISPLAYSURf, color, (left + i, top + BOXSIZE - 1), (left + BOXSIZE - 1, top + i))
+            pygame.draw.line(DISPLAYSURF, color, (left + i, top + BOXSIZE - 1), (left + BOXSIZE - 1, top + i))
 
     elif shape == OVAL:
         pygame.draw.ellipse(DISPLAYSURF, color, (left, top + quarter, BOXSIZE, half))
+
+
+def getShapeAndColor(board, boxx, boxy):
+    # shape value for x, y spot is stored in board[x][y][0]
+    # color value for x, y spot is stored in board[x][y][1]
+
+    return board[boxx][boxy][0], board[boxx][boxy][1]
 
